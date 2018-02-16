@@ -3,10 +3,10 @@ import { Route, BrowserRouter as Router, Link } from 'react-router-dom';
 import { Layout, Breadcrumb } from 'antd';
 import { FooterHelp, Link as LinkStyle } from '@shopify/polaris';
 
-import Projects from './components/Projects.js';
 import Home from './components/Home.js';
 import Login from './components/Login.js';
 import Register from './components/Register.js';
+import Projects from './components/Projects.js';
 import LoggedInNav from './components/LoggedInNav.js';
 import LoggedOutNav from './components/LoggedOutNav.js';
 

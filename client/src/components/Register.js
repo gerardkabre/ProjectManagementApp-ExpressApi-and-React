@@ -3,6 +3,8 @@ import { Redirect } from 'react-router-dom';
 import { Form, Icon, Input, Button } from 'antd';
 import { Card } from '@shopify/polaris';
 
+import { createUser } from '../utils/apiCalls';
+
 const FormItem = Form.Item;
 
 class Register extends Component {
@@ -19,21 +21,9 @@ class Register extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    fetch('http://localhost:3001/users/auth/register', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify({ email: this.state.username, password: this.state.password })
-    })
-      .then(res => {
-        console.log(res);
-        this.setState({ redirect: true });
-      })
-      .catch(function(res) {
-        console.log(res);
-      });
+    createUser({ email: this.state.username, password: this.state.password })
+      .then(res => this.setState({ redirect: true }))
+      .catch(err => console.log(err));
   };
   render() {
     if (this.state.redirect) return <Redirect to="/login" />;

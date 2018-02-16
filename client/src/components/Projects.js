@@ -6,6 +6,8 @@ import { ResourceList, TextStyle, Thumbnail, Banner } from '@shopify/polaris';
 
 import '@shopify/polaris/styles.css';
 
+import { createProject, getProjects } from '../utils/apiCalls';
+
 const { Content, Sider } = Layout;
 const FormItem = Form.Item;
 
@@ -15,48 +17,30 @@ class Projects extends Component {
     title: ''
   };
 
-  getData() {
-    fetch('http://localhost:3001/projects', {
-      headers: {
-        Authorization: this.props.token
-      },
-      method: 'GET'
-    })
+  getData = () => {
+    getProjects(this.props.token)
       .then(data => data.json())
       .then(data => this.setState({ projects: data.message }))
       .catch(error => console.log(error));
-  }
+  };
 
-  createProject() {
-    fetch('http://localhost:3001/projects', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: this.props.token
-      },
-      method: 'POST',
-      body: JSON.stringify({ title: this.state.title })
-    })
+  handleImput = event => {
+    this.setState({ title: event.target.value });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    createProject({ title: this.state.title }, this.props.token)
       .then(res => res.json())
       .then(res => {
         this.setState({ newProjectTitle: res.title });
         this.getData();
       })
       .catch(res => console.error('Error login in', res));
-  }
-  handleImput = event => {
-    this.setState({ title: event.target.value });
-  };
-  handleSubmit = e => {
-    e.preventDefault();
-    this.createProject();
   };
 
   componentDidMount() {
     this.getData();
-  }
-  content() {
-    alert('hey');
   }
 
   render() {
@@ -64,10 +48,12 @@ class Projects extends Component {
       return {
         url: '#',
         attributeOne: project.title,
-        actions: [{ 
-          content: 'View project',
-          onClick: () => alert('you clicked me')
-        }],
+        actions: [
+          {
+            content: 'View project',
+            onClick: () => alert('you clicked me')
+          }
+        ],
         persistActions: true
       };
     });
@@ -104,9 +90,8 @@ class Projects extends Component {
             </Card>
           </div>
           <Divider />
-          <Banner title="Info"  status="info">
-            <p>You can position your cursor over the Projects
-              list and scroll down to see more projects.</p>
+          <Banner title="Info" status="info">
+            <p>You can position your cursor over the Projects list and scroll down to see more projects.</p>
           </Banner>
         </Sider>
         <Content style={{ padding: '0 24px', minHeight: 280 }}>

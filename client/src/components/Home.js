@@ -4,6 +4,8 @@ import { Redirect } from 'react-router-dom';
 import { AccountConnection, Card, Banner, Heading } from '@shopify/polaris';
 import { Divider } from 'antd';
 
+import { getUser } from '../utils/apiCalls';
+
 class Home extends Component {
   state = {
     user: null,
@@ -11,21 +13,13 @@ class Home extends Component {
     redirectAccount: false
   };
 
-  getData() {
-    fetch('http://localhost:3001/users', {
-      headers: {
-        Authorization: this.props.token
-      },
-      method: 'GET'
-    })
+  componentDidMount() {
+    getUser(this.props.token)
       .then(data => data.json())
       .then(data => {
         if (data.success) this.setState({ user: data.message });
       })
-      .catch(error => console.log(error));
-  }
-  componentDidMount() {
-    this.getData();
+      .catch(err => console.log(err));
   }
   render() {
     const loggedOrNot = () => {
