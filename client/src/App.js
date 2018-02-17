@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Route, BrowserRouter as Router, Link } from 'react-router-dom';
+import { Route, BrowserRouter as Router,  } from 'react-router-dom';
 import { Layout, Breadcrumb } from 'antd';
 import { FooterHelp, Link as LinkStyle } from '@shopify/polaris';
 
-import Home from './components/Home.js';
+import Home from './components/Home/Home.js';
 import Login from './components/Login.js';
 import Register from './components/Register.js';
 import Projects from './components/Projects.js';
@@ -13,7 +13,7 @@ import LoggedOutNav from './components/LoggedOutNav.js';
 import './App.css';
 import '@shopify/polaris/styles.css';
 
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 
 class App extends Component {
   state = { token: null };

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Card, Form, Icon, Input, Button, Alert, Divider, Layout, notification } from 'antd';
-import { ResourceList, TextStyle, Thumbnail, Banner } from '@shopify/polaris';
+import { Card, Form, Input, Button, Divider, Layout, notification } from 'antd';
+import { ResourceList, Banner } from '@shopify/polaris';
 
 import '@shopify/polaris/styles.css';
 
